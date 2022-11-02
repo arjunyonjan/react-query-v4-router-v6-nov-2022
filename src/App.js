@@ -1,24 +1,39 @@
-import logo from './logo.svg';
 import './App.css';
+import { QueryClient, QueryClientProvider, } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link
+} from "react-router-dom";
+
+import {Home} from './components/Home'
+import {Codes} from './components/Codes'
+import {Code} from './components/Code'
+
+const queryClient = new QueryClient()
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <Router>
+        <div>
+
+          <Link to='/'>Codes</Link>&nbsp;
+          <Link to='/home'>Home</Link>
+
+          <Routes>
+            <Route path="/" element={<Codes/>} />
+            <Route path="/home" element={<Home/>} />
+            <Route path="/code/:id" element={<Code/>} />
+          </Routes>
+        </div>
+      </Router>
+
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   );
 }
 
